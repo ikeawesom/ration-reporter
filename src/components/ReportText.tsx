@@ -6,7 +6,7 @@ import Share from "./utils/Share";
 
 export default function ReportText({ reportText }: { reportText: string }) {
   return (
-    <FlexContainer className="mt-2 gap-4">
+    <FlexContainer className="mt-2 gap-4 w-full max-w-[800px] ">
       <h4 className="text-slate-800 text-center">
         Your <span className="text-green-500 font-medium">ration report</span>{" "}
         has been generated. Simply share from here or copy and paste the message
