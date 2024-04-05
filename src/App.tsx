@@ -53,7 +53,7 @@ export default function App() {
           )}
         </PrimaryButton>
         {reportText !== "" && <ReportText reportText={reportText} />}
-        <p className="text-center text-sm text-gray-400 font-bold">
+        <p className="text-center text-sm text-gray-400 font-bold mt-6">
           Created by Ike Lim
         </p>
       </FlexContainer>
