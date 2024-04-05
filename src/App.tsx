@@ -10,26 +10,20 @@ import ReportText from "./components/ReportText";
 import { useState } from "react";
 
 export default function App() {
-  const {
-    generateReport,
-    reportText,
-    loading,
-    handleMonday,
-    monday,
-    setLoading,
-  } = useGenerate();
-  const [loaded, setLoaded] = useState(false);
+  const { generateReport, loading, handleMonday, monday, setLoading } =
+    useGenerate();
+  const [reportText, setReportText] = useState("");
 
   const handleLoad = () => {
+    setReportText("");
     const res = generateReport();
     if (res === "") toast.error("Empty report! Please input some data.");
     else {
       setLoading(true);
       const timing = Math.floor(Math.random() * 2500);
       setTimeout(() => {
-        generateReport();
+        setReportText(res);
         setLoading(false);
-        setLoaded(true);
       }, timing);
     }
   };
@@ -58,7 +52,7 @@ export default function App() {
             "Generate Report"
           )}
         </PrimaryButton>
-        {loaded && <ReportText reportText={reportText} />}
+        {reportText !== "" && <ReportText reportText={reportText} />}
       </FlexContainer>
     </>
   );

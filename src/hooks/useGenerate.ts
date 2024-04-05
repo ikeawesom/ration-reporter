@@ -10,28 +10,41 @@ export default function useGenerate() {
     month: 1,
     year: 2024,
   });
-  const [reportText, setText] = useState("");
   const [loading, setLoading] = useState(false);
 
   const generateReport = () => {
     let text = "";
-    let curDay = "";
+
     if (report)
       Object.keys(report).forEach((day: string, index: number) => {
+        const date = getCurrentDateString(monday, index);
+        let tempText = `\n*${day} (${date})*`;
+        let indent = false;
+
         Object.keys(report[day]).forEach((meal: string) => {
+          let mealText = `\n\n${meal}${
+            report[day][meal].or ? " (OR)" : " (Dine-in)"
+          }`;
+          let indentA = false;
           if (report[day][meal].state) {
             Object.keys(report[day][meal].qty).forEach((mealType: string) => {
               if (report[day][meal].qty[mealType] > 0) {
-                const date = getCurrentDateString(monday, index);
-                text += `${curDay !== day ? `\n\n*${day} (${date})*` : ""}
-${mealType}: ${report[day][meal].qty[mealType]}`;
+                indentA = true;
+                mealText += `\n${mealType}: ${report[day][meal].qty[mealType]}`;
               }
             });
-            curDay = day;
+          }
+          if (indentA) {
+            // indented
+            indent = true;
+            tempText += mealText;
           }
         });
+
+        if (indent) {
+          text += tempText + "\n--------";
+        }
       });
-    setText(text.trim());
     return text.trim();
   };
 
@@ -40,7 +53,6 @@ ${mealType}: ${report[day][meal].qty[mealType]}`;
   };
 
   return {
-    reportText,
     generateReport,
     loading,
     handleMonday,
