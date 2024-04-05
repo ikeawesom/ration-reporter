@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+select,
+textarea {
+  @apply w-full p-2 rounded-md border-[1px] border-slate-100;
+}
