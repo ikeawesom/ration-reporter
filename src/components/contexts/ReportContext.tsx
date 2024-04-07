@@ -54,12 +54,17 @@ export function useReportContext() {
   };
 
   const handleQuantityChange = (
-    e: React.ChangeEvent<HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement>,
     day: string,
     meal: string,
     rationType: string
   ) => {
-    const value = parseInt(e.target.value);
+    let value = 0;
+    if (e.target.value === "") {
+      value = 0;
+    } else {
+      value = parseInt(e.target.value);
+    }
     if (report !== null)
       setReport({
         ...report,
