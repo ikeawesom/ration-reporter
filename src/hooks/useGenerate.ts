@@ -18,26 +18,31 @@ export default function useGenerate() {
     if (report)
       Object.keys(report).forEach((day: string, index: number) => {
         const date = getCurrentDateString(monday, index);
+
         let tempText = `\n*${day} (${date})*`;
         let indent = false;
 
         Object.keys(report[day]).forEach((meal: string) => {
-          let mealText = `\n\n${meal}${
-            report[day][meal].or ? " (OR)" : " (Dine-in)"
-          }`;
-          let indentA = false;
           if (report[day][meal].state) {
-            Object.keys(report[day][meal].qty).forEach((mealType: string) => {
-              if (report[day][meal].qty[mealType] > 0) {
-                indentA = true;
-                mealText += `\n${mealType}: ${report[day][meal].qty[mealType]}`;
-              }
-            });
-          }
-          if (indentA) {
-            // indented
-            indent = true;
-            tempText += mealText;
+            const isOR = report[day][meal].or;
+
+            let mealText = `\n\n${meal}${isOR ? " (OR)" : " (Dine-in)"}`;
+            let indentA = false;
+
+            if (report[day][meal].state) {
+              Object.keys(report[day][meal].qty).forEach((mealType: string) => {
+                if (report[day][meal].qty[mealType] > 0) {
+                  indentA = true;
+                  mealText += `\n${mealType}: ${report[day][meal].qty[mealType]}`;
+                }
+              });
+            }
+
+            if (indentA || !isOR) {
+              // indented
+              indent = true;
+              tempText += mealText;
+            }
           }
         });
 
