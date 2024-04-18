@@ -5,6 +5,7 @@ import { useReportContext } from "./contexts/ReportContext";
 import { twMerge } from "tailwind-merge";
 import { getCurrentDateString } from "../utils/getCurrentDate";
 import FlexContainer from "../utils/FlexContainer";
+import DailySnacks from "./DailySnacks";
 
 export default function DailyRation({
   className,
@@ -40,6 +41,8 @@ export default function DailyRation({
                       return <MealTypes day={day} meal={meal} key={index} />;
                     })}
                   </div>
+                  <hr className="h-[1px] rounded-full my-2 bg-gray-50/30 w-full" />
+                  <DailySnacks day={day} />
                 </FlexContainer>
               );
             })}
