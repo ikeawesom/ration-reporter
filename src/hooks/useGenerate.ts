@@ -68,8 +68,12 @@ export default function useGenerate() {
     return text.trim();
   };
 
-  const handleMonday = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMonday({ ...monday, [e.target.name]: parseInt(e.target.value) });
+  const handleMonday = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = 0;
+    if (e.target.value !== "") {
+      value = parseInt(e.target.value);
+    }
+    setMonday({ ...monday, [e.target.name]: value });
   };
 
   return {
