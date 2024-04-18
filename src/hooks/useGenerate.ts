@@ -2,9 +2,12 @@ import { useState } from "react";
 import { useReportContext } from "../components/contexts/ReportContext";
 import { DayType } from "../constants";
 import { getCurrentDateString } from "../utils/getCurrentDate";
+import { useSnackContext } from "../components/contexts/NightSnackContext";
 
 export default function useGenerate() {
   const { report } = useReportContext();
+  const { snacks } = useSnackContext();
+
   const [monday, setMonday] = useState<DayType>({
     day: 1,
     month: 1,
@@ -15,7 +18,7 @@ export default function useGenerate() {
   const generateReport = () => {
     let text = "";
 
-    if (report)
+    if (report && snacks)
       Object.keys(report).forEach((day: string, index: number) => {
         const date = getCurrentDateString(monday, index);
 
@@ -23,6 +26,7 @@ export default function useGenerate() {
         let indent = false;
 
         Object.keys(report[day]).forEach((meal: string) => {
+          // settle main meals
           if (report[day][meal].state) {
             const isOR = report[day][meal].or;
 
@@ -46,7 +50,18 @@ export default function useGenerate() {
           }
         });
 
-        if (indent) {
+        // settle night snacks
+        const snacksIndent = snacks[day].state;
+        if (snacksIndent) {
+          let snackText = "\n\nDaily Snacks:\n";
+          Object.keys(snacks[day].qty).forEach((snackType: string) => {
+            const snackQty = snacks[day].qty[snackType];
+            snackText += `${snackType}: ${snackQty > 0 ? snackQty : "NIL"}\n`;
+          });
+          tempText += snackText;
+        }
+
+        if (indent || snacksIndent) {
           text += tempText + "\n--------";
         }
       });
