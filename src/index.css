@@ -10,6 +10,7 @@
 }
 
 select,
+input,
 textarea {
   @apply w-full p-2 rounded-md border-[1px] border-slate-100;
 }
