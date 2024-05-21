@@ -53,7 +53,7 @@ export default function useGenerate() {
         // settle night snacks
         const snacksIndent = snacks[day].state;
         if (snacksIndent) {
-          let snackText = "\n\nDaily Snacks:\n";
+          let snackText = "\n\nDaily Snacks\n";
           Object.keys(snacks[day].qty).forEach((snackType: string) => {
             const snackQty = snacks[day].qty[snackType];
             snackText += `${snackType}: ${snackQty > 0 ? snackQty : "NIL"}\n`;
