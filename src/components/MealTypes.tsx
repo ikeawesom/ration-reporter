@@ -33,33 +33,33 @@ export default function MealTypes({
             >
               Outration
             </SecondaryButton>
-            {isOR &&
-              Object.keys(DefaultRationQty).map(
-                (rationType: string, index: number) => {
-                  return (
-                    <div
-                      className="w-full flex flex-col items-center justify-center gap-2"
-                      key={index}
+
+            {Object.keys(DefaultRationQty).map(
+              (rationType: string, index: number) => {
+                return (
+                  <div
+                    className="w-full flex flex-col items-center justify-center gap-2"
+                    key={index}
+                  >
+                    <label
+                      htmlFor={rationType}
+                      className="text-sm text-slate-800 text-center"
                     >
-                      <label
-                        htmlFor={rationType}
-                        className="text-sm text-slate-800 text-center"
-                      >
-                        {rationType}
-                      </label>
-                      <input
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          handleQuantityChange(e, day, meal, rationType)
-                        }
-                        className="shadow-sm px-2 py-1 border-[1px] border-slate-200 rounded-md w-full"
-                        id={rationType}
-                        type="number"
-                        value={report[day][meal].qty[rationType]}
-                      />
-                    </div>
-                  );
-                }
-              )}
+                      {rationType}
+                    </label>
+                    <input
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleQuantityChange(e, day, meal, rationType)
+                      }
+                      className="shadow-sm px-2 py-1 border-[1px] border-slate-200 rounded-md w-full"
+                      id={rationType}
+                      type="number"
+                      value={report[day][meal].qty[rationType]}
+                    />
+                  </div>
+                );
+              }
+            )}
           </FlexContainer>
         )}
       </FlexContainer>
